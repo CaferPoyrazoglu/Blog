@@ -1,13 +1,17 @@
 package com.godie.Blog.model.user.entity;
 
+import com.godie.Blog.model.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 
 /**
- * Represents a user entity named {@link UserEntity} in the system.
+ * Represents a user entity named {@link User} in the system.
  * This entity stores user-related information such as email, password, and personal details.
  */
 @Getter
@@ -17,13 +21,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 @Table(name = "USERS")
-public class UserEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "ID")
-    private String id;
-
+public class User extends BaseEntity {
     @Column(name = "EMAIL")
     private String email;
 
@@ -39,9 +37,4 @@ public class UserEntity {
     @Column(name = "IS_ADMIN")
     private Boolean isAdmin;
 
-    @Column(name = "CREATED_AT")
-    private Timestamp createdAt;
-
-    @Column(name = "UPDATED_AT")
-    private Timestamp updatedAt;
 }
