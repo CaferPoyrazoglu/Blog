@@ -35,8 +35,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((request) ->
                         request.requestMatchers(mvc.pattern("/api/auth/signup")).permitAll()
                                 .requestMatchers(mvc.pattern("/api/auth/signin")).permitAll()
-                                .requestMatchers(mvc.pattern("/api/note/**")).permitAll()
-                                .requestMatchers(mvc.pattern("/api/tag/**")).permitAll()
+                                .requestMatchers(mvc.pattern("/api/post/**")).permitAll()
                                 .requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll()
                                 .requestMatchers(mvc.pattern("/v3/api-docs/**")).permitAll()
                                 .requestMatchers(mvc.pattern("/actuator/**")).permitAll()

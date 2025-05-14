@@ -1,22 +1,22 @@
 package com.godie.Blog.service;
 
-import com.godie.Blog.dto.request.AddNoteRequest;
+import com.godie.Blog.dto.request.AddPostRequest;
 import com.godie.Blog.dto.request.DeleteNoteRequest;
 import com.godie.Blog.dto.request.EditPostRequest;
 import com.godie.Blog.model.post.entity.Post;
 import com.godie.Blog.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
 
-    public Post add(AddNoteRequest request) {
+    public Post add(AddPostRequest request) {
         Post post = Post.builder().title(request.getTitle()).content(request.getContent()).build();
         return postRepository.save(post);
     }
@@ -45,7 +45,7 @@ public class PostService {
         return post;
     }
 
-    public Page<Post> getAllPosts(Pageable pageable) {
-        return postRepository.findAll(pageable);
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
     }
 }

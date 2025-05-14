@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddNoteRequest {
+public class AddPostRequest {
     private String title;
     private String content;
 }

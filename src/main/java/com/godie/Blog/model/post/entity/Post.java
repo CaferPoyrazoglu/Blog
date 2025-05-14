@@ -20,6 +20,6 @@ public class Post extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CREATED_BY", nullable = false)
+    @JoinColumn(name = "CREATED_BY", nullable = true)
     private User createdBy;
 }
