@@ -6,6 +6,7 @@ import com.godie.Blog.dto.response.JwtAuthenticationResponse;
 import com.godie.Blog.model.user.entity.User;
 import com.godie.Blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AuthenticationService {
 
@@ -26,10 +28,11 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public JwtAuthenticationResponse signup(RegisterUserRequest request) {
-        var user = User.builder().username(request.getUsername()).email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
+        var user = User.builder().username(request.getUsername()).email(request.getEmail()).fullName(request.getFullName()).password(passwordEncoder.encode(request.getPassword()))
                 .fullName(request.getFullName()).build();
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
+        log.info("Başarıyla kayıt olundu");
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
