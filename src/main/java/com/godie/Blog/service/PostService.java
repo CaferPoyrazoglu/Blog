@@ -8,6 +8,7 @@ import com.godie.Blog.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,14 +23,14 @@ public class PostService {
 
     public Boolean delete(DeleteNoteRequest request) {
         Post post = postRepository.findById(request.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("Not found!"));
         postRepository.delete(post);
         return true;
     }
 
     public Post edit(EditPostRequest request) {
         Post post = postRepository.findById(request.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("Not found!"));
 
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
@@ -39,7 +40,7 @@ public class PostService {
 
     public Post getPostById(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("Not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("Not found!"));
 
         return post;
     }

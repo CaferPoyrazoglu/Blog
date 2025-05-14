@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,15 +36,15 @@ public class AuthenticationService {
     public JwtAuthenticationResponse signin(LoginUserRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        var user = userRepository.findByEmail(request.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Email adresi ya da şifre hatalı."));
+        var user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Email adresi ya da şifre hatalı."));
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
-    public User getAuthenticatedUser(){
+    public User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByEmail(authentication.getName());
-        return user.orElseThrow(() -> new IllegalArgumentException("Böyle bir kullanıcı bulunamadı."));
+        Optional<User> user = userRepository.findByUsername(authentication.getName());
+        return user.orElseThrow(() -> new UsernameNotFoundException("Böyle bir kullanıcı bulunamadı."));
     }
 }

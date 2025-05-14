@@ -4,9 +4,6 @@ import com.godie.Blog.model.common.entity.BaseEntity;
 import com.godie.Blog.model.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-
-import java.sql.Timestamp;
 
 @Getter
 @Setter

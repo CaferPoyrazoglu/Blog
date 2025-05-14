@@ -1,13 +1,13 @@
 package com.godie.Blog.model.user.entity;
 
 import com.godie.Blog.model.common.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
