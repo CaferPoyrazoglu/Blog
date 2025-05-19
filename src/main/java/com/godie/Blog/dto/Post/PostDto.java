@@ -1,5 +1,6 @@
 package com.godie.Blog.dto.Post;
 
+import com.godie.Blog.dto.Category.CategoryDto;
 import com.godie.Blog.model.Category;
 import com.godie.Blog.model.Tag;
 import com.godie.Blog.model.User;
@@ -18,7 +19,7 @@ import java.util.Set;
 public class PostDto {
     private String title;
     private String content;
-    private Category category;
+    private CategoryDto category;
     private Set<Tag> tags = new HashSet<>();
     private User createdBy;
 }

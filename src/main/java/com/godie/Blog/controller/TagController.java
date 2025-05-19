@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +18,11 @@ public class TagController {
 
     private final TagService tagService;
 
+    @GetMapping
+    public ResponseEntity<List<TagDto>> getAllTags() {
+        return ResponseEntity.ok(tagService.getTags());
+    }
+
     @PostMapping
     public ResponseEntity<List<TagDto>> createTags(@Valid @RequestBody CreateTagRequestDto createTagsRequestDto) {
         List<TagDto> savedTags = tagService.createTags(createTagsRequestDto.getNames());
@@ -28,6 +30,12 @@ public class TagController {
                 savedTags,
                 HttpStatus.CREATED
         );
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> deleteTag(@PathVariable Long id) {
+        tagService.deleteTag(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

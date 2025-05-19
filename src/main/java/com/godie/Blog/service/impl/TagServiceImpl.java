@@ -16,17 +16,33 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
-
     private final TagRepository tagRepository;
     private final TagMapper tagMapper;
 
     @Override
     public List<Tag> getTagByIds(Set<Long> ids) {
         List<Tag> foundTags = tagRepository.findAllById(ids);
-        if(foundTags.size() != ids.size()) {
+        if (foundTags.size() != ids.size()) {
             throw new EntityNotFoundException("Not all specified tag IDs exist");
         }
         return foundTags;
+    }
+
+    @Override
+    public List<TagDto> getTags() {
+        List<Tag> allTags = tagRepository.findAll();
+        return tagMapper.toTagListDto(allTags);
+    }
+
+    @Override
+    public Tag getTagById(Long id) {
+        return tagRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tag not found with id" + id));
+    }
+
+    @Override
+    public void deleteTag(Long id) {
+        tagRepository.deleteById(id);
     }
 
     @Override

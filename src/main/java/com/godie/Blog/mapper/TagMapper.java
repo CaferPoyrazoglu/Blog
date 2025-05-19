@@ -16,5 +16,6 @@ public interface TagMapper {
     @Mapping(target = "name", source = "tag")
     Tag toEntity(TagDto tagDto);
 
-    List<TagDto> toTagListDto(List<Tag> savedTags);
+    List<TagDto> toTagListDto(List<Tag> tagList);
+
 }

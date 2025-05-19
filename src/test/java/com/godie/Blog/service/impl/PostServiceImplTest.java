@@ -1,20 +1,12 @@
 package com.godie.Blog.service.impl;
 
-import com.godie.Blog.dto.Post.CreatePostRequestDto;
-import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.mapper.PostMapper;
-import com.godie.Blog.model.Post;
-import com.godie.Blog.model.User;
 import com.godie.Blog.repository.PostRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PostServiceImplTest {

@@ -10,6 +10,7 @@ import com.godie.Blog.repository.PostRepository;
 import com.godie.Blog.service.CategoryService;
 import com.godie.Blog.service.PostService;
 import com.godie.Blog.service.TagService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,23 @@ public class PostServiceImpl implements PostService {
 
         Post savedPost = postRepository.save(newPost);
         return postMapper.toDto(savedPost);
+    }
+
+    @Override
+    public void deletePost(Long id) {
+        postRepository.deleteById(id);
+    }
+
+    @Override
+    public PostDto getPost(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id" + id));
+        return postMapper.toDto(post);
+    }
+
+    @Override
+    public List<PostDto> getAllPosts() {
+        return postMapper.toPostListDto(postRepository.findAll());
     }
 
 }
