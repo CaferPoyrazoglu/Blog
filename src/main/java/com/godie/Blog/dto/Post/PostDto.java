@@ -1,7 +1,6 @@
 package com.godie.Blog.dto.Post;
 
 import com.godie.Blog.dto.Category.CategoryDto;
-import com.godie.Blog.model.Category;
 import com.godie.Blog.model.Tag;
 import com.godie.Blog.model.User;
 import lombok.AllArgsConstructor;

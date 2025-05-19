@@ -10,6 +10,8 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CategoryMapper {
     CategoryDto toDto(Category category);
+
     Category toEntity(CategoryDto categoryDto);
+
     List<CategoryDto> toDto(List<Category> categoryList);
 }
