@@ -33,6 +33,6 @@ public class Post extends BaseEntity {
     private Set<Tag> tags = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = true)
     private User createdBy;
 }
