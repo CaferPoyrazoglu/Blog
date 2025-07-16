@@ -11,7 +11,6 @@
 	<groupId>com.godie</groupId>
 	<artifactId>Blog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>Blog</name>
 	<description>Blog project for Godie</description>
 	<url/>
