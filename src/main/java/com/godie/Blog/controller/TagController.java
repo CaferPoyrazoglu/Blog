@@ -1,7 +1,7 @@
 package com.godie.Blog.controller;
 
 import com.godie.Blog.dto.Tag.CreateTagRequestDto;
-import com.godie.Blog.dto.Tag.TagDto;
+import com.godie.Blog.model.Tag;
 import com.godie.Blog.service.TagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,23 +19,23 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping
-    public ResponseEntity<List<TagDto>> getAllTags() {
+    public ResponseEntity<List<Tag>> getAllTags() {
         return ResponseEntity.ok(tagService.getTags());
     }
 
     @PostMapping
-    public ResponseEntity<List<TagDto>> createTags(@Valid @RequestBody CreateTagRequestDto createTagsRequestDto) {
-        List<TagDto> savedTags = tagService.createTags(createTagsRequestDto.getNames());
+    public ResponseEntity<List<Tag>> createTags(@Valid @RequestBody CreateTagRequestDto createTagsRequestDto) {
+        List<Tag> savedTags = tagService.createTags(createTagsRequestDto.getNames());
         return new ResponseEntity<>(
                 savedTags,
                 HttpStatus.CREATED
         );
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTag(@PathVariable Long id) {
         tagService.deleteTag(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
 }

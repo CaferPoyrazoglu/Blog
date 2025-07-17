@@ -1,8 +1,6 @@
 package com.godie.Blog.service.impl;
 
-import com.godie.Blog.dto.Category.CategoryDto;
 import com.godie.Blog.dto.Category.CreateCategoryRequestDto;
-import com.godie.Blog.mapper.CategoryMapper;
 import com.godie.Blog.model.Category;
 import com.godie.Blog.repository.CategoryRepository;
 import com.godie.Blog.service.CategoryService;
@@ -16,12 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
-    private final CategoryMapper categoryMapper;
 
     @Override
-    public CategoryDto createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
-        Category newCategory = categoryRepository.save(Category.builder().name(createCategoryRequestDto.getName()).build());
-        return categoryMapper.toDto(newCategory);
+    public Category createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
+        return categoryRepository.save(Category.builder().name(createCategoryRequestDto.getName()).build());
     }
 
     @Override
@@ -36,9 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> listCategories() {
-        List<Category> categoryList = categoryRepository.findAll();
-        return categoryMapper.toDto(categoryList);
+    public List<Category> listCategories() {
+        return categoryRepository.findAll();
     }
 
 }

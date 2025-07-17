@@ -1,7 +1,7 @@
 package com.godie.Blog.controller;
 
-import com.godie.Blog.dto.Category.CategoryDto;
 import com.godie.Blog.dto.Category.CreateCategoryRequestDto;
+import com.godie.Blog.model.Category;
 import com.godie.Blog.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,23 +19,23 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> listCategories() {
+    public ResponseEntity<List<Category>> listCategories() {
         return ResponseEntity.ok(categoryService.listCategories());
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDto> createCategory(
+    public ResponseEntity<Category> createCategory(
             @Valid @RequestBody CreateCategoryRequestDto createCategoryRequestDto) {
-        CategoryDto categoryDto = categoryService.createCategory(createCategoryRequestDto);
+        Category category = categoryService.createCategory(createCategoryRequestDto);
         return new ResponseEntity<>(
-                categoryDto,
+                category,
                 HttpStatus.CREATED
         );
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }

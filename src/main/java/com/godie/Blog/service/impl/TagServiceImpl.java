@@ -1,7 +1,5 @@
 package com.godie.Blog.service.impl;
 
-import com.godie.Blog.dto.Tag.TagDto;
-import com.godie.Blog.mapper.TagMapper;
 import com.godie.Blog.model.Tag;
 import com.godie.Blog.repository.TagRepository;
 import com.godie.Blog.service.TagService;
@@ -17,7 +15,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
-    private final TagMapper tagMapper;
 
     @Override
     public List<Tag> getTagByIds(Set<Long> ids) {
@@ -29,15 +26,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagDto> getTags() {
-        List<Tag> allTags = tagRepository.findAll();
-        return tagMapper.toTagListDto(allTags);
-    }
-
-    @Override
-    public Tag getTagById(Long id) {
-        return tagRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Tag not found with id" + id));
+    public List<Tag> getTags() {
+        return tagRepository.findAll();
     }
 
     @Override
@@ -46,7 +36,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagDto> createTags(Set<String> tagNames) {
+    public List<Tag> createTags(Set<String> tagNames) {
         Set<String> existingTagNames = tagRepository.findByNameIn(tagNames)
                 .stream()
                 .map(Tag::getName)
@@ -57,9 +47,7 @@ public class TagServiceImpl implements TagService {
                 .map(Tag::new)
                 .collect(Collectors.toList());
 
-        List<Tag> savedTags = tagRepository.saveAll(newTags);
-
-        return tagMapper.toTagListDto(savedTags);
+        return tagRepository.saveAll(newTags);
     }
 
 
