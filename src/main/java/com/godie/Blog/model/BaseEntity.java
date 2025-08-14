@@ -1,4 +1,4 @@
-package com.godie.Blog.model.common.entity;
+package com.godie.Blog.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
