@@ -1,6 +1,7 @@
 package com.godie.Blog.service.impl;
 
 import com.godie.Blog.model.Tag;
+import com.godie.Blog.model.TagWithPostCount;
 import com.godie.Blog.repository.TagRepository;
 import com.godie.Blog.service.TagService;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +24,10 @@ public class TagServiceImpl implements TagService {
             throw new EntityNotFoundException("Not all specified tag IDs exist");
         }
         return foundTags;
+    }
+
+    public List<TagWithPostCount> getTagsWithPostCount() {
+        return tagRepository.findTagsWithPostCount();
     }
 
     @Override

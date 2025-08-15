@@ -1,12 +1,15 @@
 package com.godie.Blog.service;
 
 import com.godie.Blog.model.Tag;
+import com.godie.Blog.model.TagWithPostCount;
 
 import java.util.List;
 import java.util.Set;
 
 public interface TagService {
     List<Tag> getTags();
+
+    List<TagWithPostCount>  getTagsWithPostCount();
 
     void deleteTag(Long id);
 
