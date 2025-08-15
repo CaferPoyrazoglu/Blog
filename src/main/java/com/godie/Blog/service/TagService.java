@@ -1,7 +1,7 @@
 package com.godie.Blog.service;
 
 import com.godie.Blog.model.Tag;
-import com.godie.Blog.model.TagWithPostCount;
+import com.godie.Blog.dto.Tag.TagWithPostCountDto;
 
 import java.util.List;
 import java.util.Set;
@@ -9,13 +9,13 @@ import java.util.Set;
 public interface TagService {
     List<Tag> getTags();
 
-    List<TagWithPostCount>  getTagsWithPostCount();
+    List<TagWithPostCountDto> getTagsWithPostCount();
 
     void deleteTag(Long id);
 
     List<Tag> createTags(Set<String> tagNames);
 
-    List<Tag> getTagByIds(Set<Long> ids);
+    List<Tag> getTagsByIds(Set<Long> ids);
 
     Tag getTagById(Long id);
 }

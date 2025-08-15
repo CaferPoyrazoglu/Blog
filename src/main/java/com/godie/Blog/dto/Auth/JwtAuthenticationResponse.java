@@ -1,4 +1,4 @@
-package com.godie.Blog.dto.request.auth;
+package com.godie.Blog.dto.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpRequest {
-    private String userName;
-    private String email;
-    private String password;
+public class JwtAuthenticationResponse {
+    private String token;
 }

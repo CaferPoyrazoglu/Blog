@@ -1,7 +1,7 @@
 package com.godie.Blog.service.impl;
 
 import com.godie.Blog.model.Tag;
-import com.godie.Blog.model.TagWithPostCount;
+import com.godie.Blog.dto.Tag.TagWithPostCountDto;
 import com.godie.Blog.repository.TagRepository;
 import com.godie.Blog.service.TagService;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,7 +18,7 @@ public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
 
     @Override
-    public List<Tag> getTagByIds(Set<Long> ids) {
+    public List<Tag> getTagsByIds(Set<Long> ids) {
         List<Tag> foundTags = tagRepository.findAllById(ids);
         if (foundTags.size() != ids.size()) {
             throw new EntityNotFoundException("Not all specified tag IDs exist");
@@ -26,7 +26,7 @@ public class TagServiceImpl implements TagService {
         return foundTags;
     }
 
-    public List<TagWithPostCount> getTagsWithPostCount() {
+    public List<TagWithPostCountDto> getTagsWithPostCount() {
         return tagRepository.findTagsWithPostCount();
     }
 
@@ -55,7 +55,11 @@ public class TagServiceImpl implements TagService {
 
         List<Tag> newTags = tagNames.stream()
                 .filter(name -> !existingTagNames.contains(name))
-                .map(Tag::new)
+                .map(name -> {
+                    Tag tag = new Tag();
+                    tag.setName(name);
+                    return tag;
+                })
                 .collect(Collectors.toList());
 
         return tagRepository.saveAll(newTags);

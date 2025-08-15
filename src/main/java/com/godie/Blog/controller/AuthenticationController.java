@@ -1,9 +1,9 @@
 package com.godie.Blog.controller;
 
 
-import com.godie.Blog.dto.request.auth.SignInRequest;
-import com.godie.Blog.dto.request.auth.SignUpRequest;
-import com.godie.Blog.dto.response.JwtAuthenticationResponse;
+import com.godie.Blog.dto.Auth.SignInRequest;
+import com.godie.Blog.dto.Auth.SignUpRequest;
+import com.godie.Blog.dto.Auth.JwtAuthenticationResponse;
 import com.godie.Blog.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

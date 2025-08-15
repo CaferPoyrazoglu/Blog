@@ -12,6 +12,6 @@ public interface PostService {
 
     Post getPost(Long id);
 
-    List<Post> getAllPosts(Long categoryId, Long tagId);
+    List<Post> getAllPosts();
 }
 

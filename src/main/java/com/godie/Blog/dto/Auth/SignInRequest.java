@@ -1,4 +1,4 @@
-package com.godie.Blog.dto.request.auth;
+package com.godie.Blog.dto.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
