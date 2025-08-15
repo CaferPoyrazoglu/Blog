@@ -52,8 +52,33 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
+    public List<Post> getAllPosts(Long categoryId, Long tagId) {
+        if(categoryId != null && tagId != null) {
+            Category category = categoryService.getCategoryById(categoryId);
+            Tag tag = tagService.getTagById(tagId);
+            return postRepository.findAllByCategoryAndTagsContaining(
+                    category,
+                    tag
+            );
+        }
+
+        if(categoryId != null) {
+            Category category = categoryService.getCategoryById(categoryId);
+            return postRepository.findAllByCategory(
+                    category
+            );
+        }
+
+        if(tagId != null) {
+            Tag tag = tagService.getTagById(tagId);
+            return postRepository.findAllByTagsContaining(
+                    tag
+            );
+        }
+
+        return postRepository.findAllWithCategoryAndTags();
     }
+
+
 
 }

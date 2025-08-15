@@ -19,8 +19,10 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts() {
-        return ResponseEntity.ok(postService.getAllPosts());
+    public ResponseEntity<List<Post>> getAllPosts(@RequestParam(required = false) Long categoryId,
+                                                  @RequestParam(required = false) Long tagId) {
+        List<Post> posts = postService.getAllPosts(categoryId, tagId);
+        return ResponseEntity.ok(posts);
     }
 
     @PostMapping
