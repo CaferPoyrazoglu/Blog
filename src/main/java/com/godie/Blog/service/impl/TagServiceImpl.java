@@ -1,11 +1,13 @@
 package com.godie.Blog.service.impl;
 
+import com.godie.Blog.dto.Tag.TagDto;
+import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
 import com.godie.Blog.model.Tag;
-import com.godie.Blog.dto.Tag.TagWithPostCountDto;
 import com.godie.Blog.repository.TagRepository;
 import com.godie.Blog.service.TagService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public List<Tag> getTagsByIds(Set<Long> ids) {
@@ -26,7 +29,7 @@ public class TagServiceImpl implements TagService {
         return foundTags;
     }
 
-    public List<TagWithPostCountDto> getTagsWithPostCount() {
+    public List<TagsWithPostCountDto> getTagsWithPostCount() {
         return tagRepository.findTagsWithPostCount();
     }
 
@@ -47,7 +50,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> createTags(Set<String> tagNames) {
+    public List<TagDto> createTags(Set<String> tagNames) {
         Set<String> existingTagNames = tagRepository.findByNameIn(tagNames)
                 .stream()
                 .map(Tag::getName)
@@ -62,8 +65,11 @@ public class TagServiceImpl implements TagService {
                 })
                 .collect(Collectors.toList());
 
-        return tagRepository.saveAll(newTags);
-    }
+        List<Tag> savedTags = tagRepository.saveAll(newTags);
 
+        return savedTags.stream()
+                .map(tag -> modelMapper.map(tag, TagDto.class))
+                .collect(Collectors.toList());
+    }
 
 }

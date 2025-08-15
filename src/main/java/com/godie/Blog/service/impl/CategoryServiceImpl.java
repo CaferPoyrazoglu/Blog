@@ -1,23 +1,33 @@
 package com.godie.Blog.service.impl;
 
+import com.godie.Blog.dto.Category.CategoryDto;
 import com.godie.Blog.dto.Category.CreateCategoryRequestDto;
 import com.godie.Blog.model.Category;
 import com.godie.Blog.repository.CategoryRepository;
 import com.godie.Blog.service.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
 
     @Override
-    public Category createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
-        return categoryRepository.save(Category.builder().name(createCategoryRequestDto.getName()).build());
+    public CategoryDto createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
+        Category newCategory = Category.builder()
+                .name(createCategoryRequestDto.getName())
+                .build();
+
+        Category savedCategory = categoryRepository.save(newCategory);
+
+        return modelMapper.map(savedCategory, CategoryDto.class);
     }
 
     @Override
@@ -32,8 +42,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> listCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDto> listCategories() {
+        return categoryRepository.findAll().stream()
+                .map(category -> modelMapper.map(category, CategoryDto.class)) // ModelMapper ile dönüşüm
+                .collect(Collectors.toList());
     }
 
 }

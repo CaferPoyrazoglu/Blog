@@ -1,17 +1,18 @@
 package com.godie.Blog.service;
 
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
+import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.model.Post;
 
 import java.util.List;
 
 public interface PostService {
-    Post createPost(CreatePostRequestDto createPostRequestDto);
+    PostDto createPost(CreatePostRequestDto createPostRequestDto);
 
     void deletePost(Long id);
 
-    Post getPost(Long id);
+    PostDto getPost(Long id);
 
-    List<Post> getAllPosts();
+    List<PostDto> getAllPosts();
 }
 

@@ -1,6 +1,6 @@
 package com.godie.Blog.dto.Tag;
 
-public interface TagWithPostCountDto {
+public interface TagsWithPostCountDto {
     String getName();
 
     Long getPostCount();

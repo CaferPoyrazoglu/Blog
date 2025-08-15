@@ -1,7 +1,7 @@
 package com.godie.Blog.controller;
 
+import com.godie.Blog.dto.Category.CategoryDto;
 import com.godie.Blog.dto.Category.CreateCategoryRequestDto;
-import com.godie.Blog.model.Category;
 import com.godie.Blog.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +19,14 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> listCategories() {
+    public ResponseEntity<List<CategoryDto>> listCategories() {
         return ResponseEntity.ok(categoryService.listCategories());
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(
+    public ResponseEntity<CategoryDto> createCategory(
             @Valid @RequestBody CreateCategoryRequestDto createCategoryRequestDto) {
-        Category category = categoryService.createCategory(createCategoryRequestDto);
+        CategoryDto category = categoryService.createCategory(createCategoryRequestDto);
         return new ResponseEntity<>(
                 category,
                 HttpStatus.CREATED

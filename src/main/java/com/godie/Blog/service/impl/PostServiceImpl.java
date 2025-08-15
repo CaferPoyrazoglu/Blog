@@ -1,6 +1,7 @@
 package com.godie.Blog.service.impl;
 
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
+import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.model.Category;
 import com.godie.Blog.model.Post;
 import com.godie.Blog.model.Tag;
@@ -10,6 +11,7 @@ import com.godie.Blog.service.PostService;
 import com.godie.Blog.service.TagService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -22,9 +24,10 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final CategoryService categoryService;
     private final TagService tagService;
+    private final ModelMapper modelMapper;
 
     @Override
-    public Post createPost(CreatePostRequestDto createPostRequestDto) {
+    public PostDto createPost(CreatePostRequestDto createPostRequestDto) {
         Post newPost = new Post();
         newPost.setTitle(createPostRequestDto.getTitle());
         newPost.setContent(createPostRequestDto.getContent());
@@ -37,7 +40,9 @@ public class PostServiceImpl implements PostService {
         List<Tag> tags = tagService.getTagsByIds(tagIds);
         newPost.setTags(new HashSet<>(tags));
 
-        return postRepository.save(newPost);
+        Post savedPost = postRepository.save(newPost);
+
+        return modelMapper.map(savedPost, PostDto.class);
     }
 
     @Override
@@ -46,13 +51,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post getPost(Long id) {
-        return postRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Post not found with id" + id));
+    public PostDto getPost(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id " + id));
+
+        return modelMapper.map(post, PostDto.class);
     }
 
     @Override
-    public List<Post> getAllPosts() {
+    public List<PostDto> getAllPosts() {
         return postRepository.findAllWithCategoryAndTags();
     }
 

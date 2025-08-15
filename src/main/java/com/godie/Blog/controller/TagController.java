@@ -1,8 +1,9 @@
 package com.godie.Blog.controller;
 
 import com.godie.Blog.dto.Tag.CreateTagRequestDto;
+import com.godie.Blog.dto.Tag.TagDto;
+import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
 import com.godie.Blog.model.Tag;
-import com.godie.Blog.dto.Tag.TagWithPostCountDto;
 import com.godie.Blog.service.TagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,13 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping
-    public ResponseEntity<List<TagWithPostCountDto>> getTagsWithPostCount() {
+    public ResponseEntity<List<TagsWithPostCountDto>> getTagsWithPostCount() {
         return ResponseEntity.ok(tagService.getTagsWithPostCount());
     }
 
     @PostMapping
-    public ResponseEntity<List<Tag>> createTags(@Valid @RequestBody CreateTagRequestDto createTagsRequestDto) {
-        List<Tag> savedTags = tagService.createTags(createTagsRequestDto.getNames());
+    public ResponseEntity<List<TagDto>> createTags(@Valid @RequestBody CreateTagRequestDto createTagsRequestDto) {
+        List<TagDto> savedTags = tagService.createTags(createTagsRequestDto.getNames());
         return new ResponseEntity<>(
                 savedTags,
                 HttpStatus.CREATED

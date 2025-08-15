@@ -1,6 +1,7 @@
 package com.godie.Blog.controller;
 
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
+import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.model.Post;
 import com.godie.Blog.service.PostService;
 import jakarta.validation.Valid;
@@ -19,20 +20,20 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts() {
-        List<Post> posts = postService.getAllPosts();
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> posts = postService.getAllPosts();
         return ResponseEntity.ok(posts);
     }
 
     @PostMapping
-    public ResponseEntity<Post> createPost(
+    public ResponseEntity<PostDto> createPost(
             @Valid @RequestBody CreatePostRequestDto createPostRequestDto) {
-        Post createdPost = postService.createPost(createPostRequestDto);
+        PostDto createdPost = postService.createPost(createPostRequestDto);
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Post> getPost(@PathVariable Long id) {
+    public ResponseEntity<PostDto> getPost(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getPost(id));
     }
 

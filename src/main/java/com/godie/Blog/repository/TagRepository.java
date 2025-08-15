@@ -1,7 +1,7 @@
 package com.godie.Blog.repository;
 
+import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
 import com.godie.Blog.model.Tag;
-import com.godie.Blog.dto.Tag.TagWithPostCountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,5 +22,5 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
             GROUP BY t.id, t.name
             ORDER BY postCount DESC
             """, nativeQuery = true)
-    List<TagWithPostCountDto> findTagsWithPostCount();
+    List<TagsWithPostCountDto> findTagsWithPostCount();
 }
