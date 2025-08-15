@@ -22,11 +22,11 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> getTagsByIds(Set<Long> ids) {
-        List<Tag> foundTags = tagRepository.findAllById(ids);
-        if (foundTags.size() != ids.size()) {
-            throw new EntityNotFoundException("Not all specified tag IDs exist");
+        List<Tag> tags = tagRepository.findAllById(ids);
+        if (tags.size() != ids.size()) {
+            throw new EntityNotFoundException("Belirtilen etiketlerin tumu mevcut degil");
         }
-        return foundTags;
+        return tags;
     }
 
     public List<TagsWithPostCountDto> getTagsWithPostCount() {
@@ -36,7 +36,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag getTagById(Long id) {
         return tagRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Tag not found with ID " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Etiket bulunamadi ID:" + id));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteTag(Long id) {
+    public void deleteTagById(Long id) {
         tagRepository.deleteById(id);
     }
 

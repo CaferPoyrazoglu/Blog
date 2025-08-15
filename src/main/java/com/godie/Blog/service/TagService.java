@@ -12,7 +12,7 @@ public interface TagService {
 
     List<TagsWithPostCountDto> getTagsWithPostCount();
 
-    void deleteTag(Long id);
+    void deleteTagById(Long id);
 
     List<TagDto> createTags(Set<String> tagNames);
 

@@ -15,9 +15,9 @@ import java.util.Set;
 @Builder
 public class CreateTagRequestDto {
 
-    @NotEmpty(message = "At least one tag name is required")
-    @Size(max = 10, message = "Maximum {max} tags allowed")
+    @NotEmpty(message = "En az bir etiket gerekli")
+    @Size(max = 10, message = "En fazla {max} etiket eklenebilir")
     private Set<
-            @Size(min = 2, max = 30, message = "Tag name must be between {min} and {max} characters")
+            @Size(min = 2, max = 30, message = "Etiket {min} ila {max} karakter uzunlugunda olmali")
                     String> names;
 }

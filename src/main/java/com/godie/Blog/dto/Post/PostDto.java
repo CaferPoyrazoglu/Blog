@@ -22,5 +22,5 @@ public class PostDto {
     private String content;
     private Category category;
     private Set<Tag> tags = new HashSet<>();
-    private User createdBy;
+    private User author;
 }

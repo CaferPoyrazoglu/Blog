@@ -3,7 +3,6 @@ package com.godie.Blog.service.impl;
 import com.godie.Blog.repository.UserRepository;
 import com.godie.Blog.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,13 +14,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) {
-                return userRepository.findByEmail(username)
-                        .orElseThrow(() -> new UsernameNotFoundException("Kullanıcı bulunamadı."));
-            }
-        };
+        return username -> userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Kullanici bulunamadi"));
     }
 
 }

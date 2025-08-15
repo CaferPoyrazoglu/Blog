@@ -17,18 +17,18 @@ import java.util.Set;
 @Builder
 public class CreatePostRequestDto {
 
-    @NotBlank(message = "Title is required")
-    @Size(min = 3, max = 200, message = "Title must be between {min} and {max} characters")
+    @NotBlank(message = "Baslik gerekli")
+    @Size(min = 3, max = 20, message = "Baslik {min} ila {max} karakter uzunlugunda olmali")
     private String title;
 
-    @NotBlank(message = "Content is required")
-    @Size(min = 5, max = 50000, message = "Content must be between {min} and {max} characters")
+    @NotBlank(message = "Icerik gerekli")
+    @Size(min = 5, max = 50000, message = "Icerik {min} ila {max} karakter uzunlugunda olmali")
     private String content;
 
-    @NotNull(message = "Category ID is required")
+    @NotNull(message = "Kategori ID gerekli")
     private Long categoryId;
 
     @Builder.Default
-    @Size(max = 10, message = "Maximum {max} tags allowed")
+    @Size(max = 10, message = "Maksimum {max} etiket eklenebilir")
     private Set<Long> tagIds = new HashSet<>();
 }

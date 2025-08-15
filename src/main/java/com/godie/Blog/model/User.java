@@ -34,14 +34,14 @@ public class User implements UserDetails {
     @Column(name = "UPDATED_AT")
     private Timestamp updatedAt;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
-
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
 
     @Column(name = "role", nullable = false)
     private Role role;

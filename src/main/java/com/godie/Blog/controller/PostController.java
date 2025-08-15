@@ -2,7 +2,6 @@ package com.godie.Blog.controller;
 
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
 import com.godie.Blog.dto.Post.PostDto;
-import com.godie.Blog.model.Post;
 import com.godie.Blog.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<List<PostDto>> getAllPosts() {
-        List<PostDto> posts = postService.getAllPosts();
-        return ResponseEntity.ok(posts);
+    public ResponseEntity<List<PostDto>> getPosts() {
+        return ResponseEntity.ok(postService.getPosts());
     }
 
     @PostMapping
@@ -33,13 +31,13 @@ public class PostController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<PostDto> getPost(@PathVariable Long id) {
-        return ResponseEntity.ok(postService.getPost(id));
+    public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getPostById(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
-        postService.deletePost(id);
+    public ResponseEntity<Void> deletePostById(@PathVariable Long id) {
+        postService.deletePostById(id);
         return ResponseEntity.noContent().build();
     }
 }

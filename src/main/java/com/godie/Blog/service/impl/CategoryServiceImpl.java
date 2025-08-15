@@ -31,20 +31,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(Long id) {
+    public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);
     }
 
     @Override
     public Category getCategoryById(Long categoryId) {
         return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new EntityNotFoundException("Category not found with id" + categoryId));
+                .orElseThrow(() -> new EntityNotFoundException("Kategori bulunamadi ID:" + categoryId));
     }
 
     @Override
-    public List<CategoryDto> listCategories() {
+    public List<CategoryDto> getCategories() {
         return categoryRepository.findAll().stream()
-                .map(category -> modelMapper.map(category, CategoryDto.class)) // ModelMapper ile dönüşüm
+                .map(category -> modelMapper.map(category, CategoryDto.class))
                 .collect(Collectors.toList());
     }
 

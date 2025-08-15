@@ -3,7 +3,6 @@ package com.godie.Blog.controller;
 import com.godie.Blog.dto.Tag.CreateTagRequestDto;
 import com.godie.Blog.dto.Tag.TagDto;
 import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
-import com.godie.Blog.model.Tag;
 import com.godie.Blog.service.TagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +34,8 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTag(@PathVariable Long id) {
-        tagService.deleteTag(id);
+    public ResponseEntity<Void> deleteTagById(@PathVariable Long id) {
+        tagService.deleteTagById(id);
         return ResponseEntity.noContent().build();
     }
 

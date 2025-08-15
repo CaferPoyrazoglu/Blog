@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CreateCategoryRequestDto {
-    @NotBlank(message = "Category name is required")
-    @Size(min = 2, max = 20, message = "Category name must be between {min} and {max} characters")
+    @NotBlank(message = "Kategori adi gerekli")
+    @Size(min = 2, max = 20, message = "Kategori adi {min} ila {max} karakter uzunlugunda olmali")
     private String name;
 }

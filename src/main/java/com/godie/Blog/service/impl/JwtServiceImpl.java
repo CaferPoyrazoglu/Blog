@@ -53,7 +53,7 @@ public class JwtServiceImpl implements JwtService {
                     .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TOKEN))
                     .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
         } catch (Exception e) {
-            throw new JwtException("Token oluşturulamadı: [ " + e.getMessage() + " ]");
+            throw new JwtException("Token olusturulamadi: [ " + e.getMessage() + " ]");
         }
 
     }

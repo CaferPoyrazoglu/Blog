@@ -31,6 +31,8 @@ public class PostServiceImpl implements PostService {
         Post newPost = new Post();
         newPost.setTitle(createPostRequestDto.getTitle());
         newPost.setContent(createPostRequestDto.getContent());
+
+        //TODO
         newPost.setCreatedBy(null);
 
         Category category = categoryService.getCategoryById(createPostRequestDto.getCategoryId());
@@ -46,21 +48,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(Long id) {
+    public void deletePostById(Long id) {
         postRepository.deleteById(id);
     }
 
     @Override
-    public PostDto getPost(Long id) {
+    public PostDto getPostById(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Post not found with id " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Post bulunamadi ID:" + id));
 
         return modelMapper.map(post, PostDto.class);
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-        return postRepository.findAllWithCategoryAndTags();
+    public List<PostDto> getPosts() {
+        return postRepository.findAllWithCategoryAndTags().stream()
+                .map(post -> modelMapper.map(post, PostDto.class)) // ModelMapper ile dönüşüm
+                .toList();
     }
 
 }

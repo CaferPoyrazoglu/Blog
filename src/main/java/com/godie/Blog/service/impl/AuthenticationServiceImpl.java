@@ -1,8 +1,8 @@
 package com.godie.Blog.service.impl;
 
+import com.godie.Blog.dto.Auth.JwtAuthenticationResponse;
 import com.godie.Blog.dto.Auth.SignInRequest;
 import com.godie.Blog.dto.Auth.SignUpRequest;
-import com.godie.Blog.dto.Auth.JwtAuthenticationResponse;
 import com.godie.Blog.model.User;
 import com.godie.Blog.model.enums.Role;
 import com.godie.Blog.repository.UserRepository;
@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Email adresi ya da şifre hatalı."));
+                .orElseThrow(() -> new IllegalArgumentException("Email adresi ya da sifre hatali"));
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
@@ -50,6 +50,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByEmail(authentication.getName());
-        return user.orElseThrow(() -> new IllegalArgumentException("Böyle bir kullanıcı bulunamadı."));
+        return user.orElseThrow(() -> new IllegalArgumentException("Kullanici bulunamadi"));
     }
 }

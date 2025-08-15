@@ -15,27 +15,26 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/categories")
 @RequiredArgsConstructor
 public class CategoryController {
-
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> listCategories() {
-        return ResponseEntity.ok(categoryService.listCategories());
+    public ResponseEntity<List<CategoryDto>> getCategories() {
+        return ResponseEntity.ok(categoryService.getCategories());
     }
 
     @PostMapping
     public ResponseEntity<CategoryDto> createCategory(
             @Valid @RequestBody CreateCategoryRequestDto createCategoryRequestDto) {
-        CategoryDto category = categoryService.createCategory(createCategoryRequestDto);
+        CategoryDto createdCategory = categoryService.createCategory(createCategoryRequestDto);
         return new ResponseEntity<>(
-                category,
+                createdCategory,
                 HttpStatus.CREATED
         );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
+    public ResponseEntity<Void> deleteCategoryById(@PathVariable Long id) {
+        categoryService.deleteCategoryById(id);
         return ResponseEntity.noContent().build();
     }
 }
