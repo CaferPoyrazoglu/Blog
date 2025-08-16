@@ -1,5 +1,8 @@
 package com.godie.Blog.dto.Post;
 
+import com.godie.Blog.dto.Category.CategoryDto;
+import com.godie.Blog.dto.Tag.TagDto;
+import com.godie.Blog.dto.User.UserDto;
 import com.godie.Blog.model.Category;
 import com.godie.Blog.model.Tag;
 import com.godie.Blog.model.User;
@@ -22,7 +25,7 @@ public class PostDto {
     private String content;
     private String description;
     private Long readingTime;
-    private Category category;
-    private Set<Tag> tags = new HashSet<>();
-    private User author;
+    private CategoryDto category;
+    private Set<TagDto> tags = new HashSet<>();
+    private UserDto createdBy;
 }

@@ -33,10 +33,10 @@ public class Post {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "READING_TIME")
