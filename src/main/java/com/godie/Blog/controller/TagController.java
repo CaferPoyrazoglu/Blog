@@ -23,7 +23,7 @@ public class TagController {
 
     @GetMapping
     public ResponseEntity<List<TagsWithPostCountDto>> getTagsWithPostCount() {
-        return ResponseEntity.ok(tagService.getTagsWithPostCount(authenticationService.getAuthenticatedUser()));
+        return ResponseEntity.ok(tagService.getTagsWithPostCount());
     }
 
     @PostMapping

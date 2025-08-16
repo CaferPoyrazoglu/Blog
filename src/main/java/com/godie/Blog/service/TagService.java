@@ -11,7 +11,7 @@ import java.util.Set;
 public interface TagService {
     List<Tag> getTags();
 
-    List<TagsWithPostCountDto> getTagsWithPostCount(User user);
+    List<TagsWithPostCountDto> getTagsWithPostCount();
 
     void deleteTagById(Long id, User user);
 

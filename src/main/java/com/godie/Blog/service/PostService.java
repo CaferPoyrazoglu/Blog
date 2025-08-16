@@ -11,9 +11,9 @@ public interface PostService {
 
     void deletePostById(Long id, User user);
 
-    PostDto getPostById(Long id, User user);
+    PostDto getPostById(Long id);
 
-    List<PostDto> getPosts(User user);
+    List<PostDto> getPosts();
 
     Long calculateReadingTime(String text);
 }

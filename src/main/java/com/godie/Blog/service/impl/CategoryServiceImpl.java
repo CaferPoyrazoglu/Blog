@@ -44,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> getCategories(User user) {
+    public List<CategoryDto> getCategories() {
         return categoryRepository.findAll().stream()
                 .map(category -> modelMapper.map(category, CategoryDto.class))
                 .collect(Collectors.toList());

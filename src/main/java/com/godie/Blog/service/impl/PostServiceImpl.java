@@ -66,7 +66,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto getPostById(Long id, User user) {
+    public PostDto getPostById(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Post bulunamadi ID:" + id));
 
@@ -74,7 +74,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getPosts(User user) {
+    public List<PostDto> getPosts() {
         return postRepository.findAllWithCategoryAndTags().stream()
                 .map(post -> modelMapper.map(post, PostDto.class)) // ModelMapper ile dönüşüm
                 .toList();

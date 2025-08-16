@@ -31,7 +31,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagsWithPostCountDto> getTagsWithPostCount(User user) {
+    public List<TagsWithPostCountDto> getTagsWithPostCount() {
         return tagRepository.findTagsWithPostCount();
     }
 

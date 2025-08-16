@@ -22,7 +22,7 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<PostDto>> getPosts() {
-        return ResponseEntity.ok(postService.getPosts(authenticationService.getAuthenticatedUser()));
+        return ResponseEntity.ok(postService.getPosts());
     }
 
     @PostMapping
@@ -34,7 +34,7 @@ public class PostController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
-        return ResponseEntity.ok(postService.getPostById(id, authenticationService.getAuthenticatedUser()));
+        return ResponseEntity.ok(postService.getPostById(id));
     }
 
     @DeleteMapping("/{id}")

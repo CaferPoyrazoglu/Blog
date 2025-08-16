@@ -21,7 +21,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<CategoryDto>> getCategories() {
-        return ResponseEntity.ok(categoryService.getCategories(authenticationService.getAuthenticatedUser()));
+        return ResponseEntity.ok(categoryService.getCategories());
     }
 
     @PostMapping
