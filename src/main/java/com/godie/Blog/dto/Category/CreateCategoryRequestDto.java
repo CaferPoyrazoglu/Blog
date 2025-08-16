@@ -15,4 +15,8 @@ public class CreateCategoryRequestDto {
     @NotBlank(message = "Kategori adi gerekli")
     @Size(min = 2, max = 20, message = "Kategori adi {min} ila {max} karakter uzunlugunda olmali")
     private String name;
+
+    @NotBlank(message = "Kategori aciklamasi gerekli")
+    @Size(min = 2, max = 200, message = "Kategori aciklamasi {min} ila {max} karakter uzunlugunda olmali")
+    private String description;
 }

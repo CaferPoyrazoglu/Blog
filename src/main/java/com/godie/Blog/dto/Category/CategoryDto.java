@@ -12,5 +12,6 @@ public class CategoryDto {
     private Long id;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private String description;
     private String name;
 }

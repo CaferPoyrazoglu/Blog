@@ -23,6 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
         Category newCategory = Category.builder()
                 .name(createCategoryRequestDto.getName())
+                .description(createCategoryRequestDto.getDescription())
                 .build();
 
         Category savedCategory = categoryRepository.save(newCategory);

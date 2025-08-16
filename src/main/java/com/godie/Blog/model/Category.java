@@ -28,6 +28,9 @@ public class Category {
     @Column(name = "UPDATED_AT")
     private Timestamp updatedAt;
 
+    @Column(name = "DESCRIPTION", nullable = false, unique = true)
+    private String description;
+
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 }
