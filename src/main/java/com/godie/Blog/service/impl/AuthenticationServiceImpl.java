@@ -39,8 +39,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public JwtAuthenticationResponse signin(SignInRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user = userRepository.findByEmail(request.getEmail())
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        var user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("Email adresi ya da sifre hatali"));
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByEmail(authentication.getName());
+        Optional<User> user = userRepository.findByUsername(authentication.getName());
         return user.orElseThrow(() -> new IllegalArgumentException("Kullanici bulunamadi"));
     }
 }
