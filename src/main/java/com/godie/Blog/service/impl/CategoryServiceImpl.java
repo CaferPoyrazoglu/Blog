@@ -3,6 +3,7 @@ package com.godie.Blog.service.impl;
 import com.godie.Blog.dto.Category.CategoryDto;
 import com.godie.Blog.dto.Category.CreateCategoryRequestDto;
 import com.godie.Blog.model.Category;
+import com.godie.Blog.model.User;
 import com.godie.Blog.repository.CategoryRepository;
 import com.godie.Blog.service.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final ModelMapper modelMapper;
 
     @Override
-    public CategoryDto createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
+    public CategoryDto createCategory(CreateCategoryRequestDto createCategoryRequestDto, User user) {
         Category newCategory = Category.builder()
                 .name(createCategoryRequestDto.getName())
                 .description(createCategoryRequestDto.getDescription())
@@ -32,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategoryById(Long id) {
+    public void deleteCategoryById(Long id, User user) {
         categoryRepository.deleteById(id);
     }
 
@@ -43,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> getCategories() {
+    public List<CategoryDto> getCategories(User user) {
         return categoryRepository.findAll().stream()
                 .map(category -> modelMapper.map(category, CategoryDto.class))
                 .collect(Collectors.toList());

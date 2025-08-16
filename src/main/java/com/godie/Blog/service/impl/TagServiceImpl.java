@@ -3,6 +3,7 @@ package com.godie.Blog.service.impl;
 import com.godie.Blog.dto.Tag.TagDto;
 import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
 import com.godie.Blog.model.Tag;
+import com.godie.Blog.model.User;
 import com.godie.Blog.repository.TagRepository;
 import com.godie.Blog.service.TagService;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,7 +30,8 @@ public class TagServiceImpl implements TagService {
         return tags;
     }
 
-    public List<TagsWithPostCountDto> getTagsWithPostCount() {
+    @Override
+    public List<TagsWithPostCountDto> getTagsWithPostCount(User user) {
         return tagRepository.findTagsWithPostCount();
     }
 
@@ -45,12 +47,12 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteTagById(Long id) {
+    public void deleteTagById(Long id, User user) {
         tagRepository.deleteById(id);
     }
 
     @Override
-    public List<TagDto> createTags(Set<String> tagNames) {
+    public List<TagDto> createTags(Set<String> tagNames, User user) {
         Set<String> existingTagNames = tagRepository.findByNameIn(tagNames)
                 .stream()
                 .map(Tag::getName)

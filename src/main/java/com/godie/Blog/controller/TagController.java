@@ -3,6 +3,7 @@ package com.godie.Blog.controller;
 import com.godie.Blog.dto.Tag.CreateTagRequestDto;
 import com.godie.Blog.dto.Tag.TagDto;
 import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
+import com.godie.Blog.service.AuthenticationService;
 import com.godie.Blog.service.TagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +17,18 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/tags")
 @RequiredArgsConstructor
 public class TagController {
-
     private final TagService tagService;
+    private final AuthenticationService authenticationService;
+
 
     @GetMapping
     public ResponseEntity<List<TagsWithPostCountDto>> getTagsWithPostCount() {
-        return ResponseEntity.ok(tagService.getTagsWithPostCount());
+        return ResponseEntity.ok(tagService.getTagsWithPostCount(authenticationService.getAuthenticatedUser()));
     }
 
     @PostMapping
     public ResponseEntity<List<TagDto>> createTags(@Valid @RequestBody CreateTagRequestDto createTagsRequestDto) {
-        List<TagDto> savedTags = tagService.createTags(createTagsRequestDto.getNames());
+        List<TagDto> savedTags = tagService.createTags(createTagsRequestDto.getNames(), authenticationService.getAuthenticatedUser());
         return new ResponseEntity<>(
                 savedTags,
                 HttpStatus.CREATED
@@ -35,7 +37,7 @@ public class TagController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTagById(@PathVariable Long id) {
-        tagService.deleteTagById(id);
+        tagService.deleteTagById(id, authenticationService.getAuthenticatedUser());
         return ResponseEntity.noContent().build();
     }
 

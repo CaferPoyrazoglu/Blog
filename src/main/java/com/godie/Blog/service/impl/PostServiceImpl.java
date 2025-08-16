@@ -5,6 +5,7 @@ import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.model.Category;
 import com.godie.Blog.model.Post;
 import com.godie.Blog.model.Tag;
+import com.godie.Blog.model.User;
 import com.godie.Blog.repository.PostRepository;
 import com.godie.Blog.service.CategoryService;
 import com.godie.Blog.service.PostService;
@@ -27,13 +28,11 @@ public class PostServiceImpl implements PostService {
     private final ModelMapper modelMapper;
 
     @Override
-    public PostDto createPost(CreatePostRequestDto createPostRequestDto) {
+    public PostDto createPost(CreatePostRequestDto createPostRequestDto, User user) {
         Post newPost = new Post();
         newPost.setTitle(createPostRequestDto.getTitle());
         newPost.setContent(createPostRequestDto.getContent());
-
-        //TODO
-        newPost.setCreatedBy(null);
+        newPost.setCreatedBy(user);
 
         Category category = categoryService.getCategoryById(createPostRequestDto.getCategoryId());
         newPost.setCategory(category);
@@ -48,12 +47,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePostById(Long id) {
+    public void deletePostById(Long id, User user) {
         postRepository.deleteById(id);
     }
 
     @Override
-    public PostDto getPostById(Long id) {
+    public PostDto getPostById(Long id, User user) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Post bulunamadi ID:" + id));
 
@@ -61,7 +60,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getPosts() {
+    public List<PostDto> getPosts(User user) {
         return postRepository.findAllWithCategoryAndTags().stream()
                 .map(post -> modelMapper.map(post, PostDto.class)) // ModelMapper ile dönüşüm
                 .toList();
