@@ -20,6 +20,8 @@ public class PostDto {
     private Timestamp updatedAt;
     private String title;
     private String content;
+    private String description;
+    private Long readingTime;
     private Category category;
     private Set<Tag> tags = new HashSet<>();
     private User author;

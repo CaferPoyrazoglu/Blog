@@ -32,6 +32,8 @@ public class PostServiceImpl implements PostService {
         Post newPost = new Post();
         newPost.setTitle(createPostRequestDto.getTitle());
         newPost.setContent(createPostRequestDto.getContent());
+        newPost.setDescription(createPostRequestDto.getDescription());
+        newPost.setReadingTime(calculateReadingTime(createPostRequestDto.getContent()));
         newPost.setCreatedBy(user);
 
         Category category = categoryService.getCategoryById(createPostRequestDto.getCategoryId());
@@ -44,6 +46,18 @@ public class PostServiceImpl implements PostService {
         Post savedPost = postRepository.save(newPost);
 
         return modelMapper.map(savedPost, PostDto.class);
+    }
+
+    @Override
+    public Long calculateReadingTime(String content) {
+        if (content == null || content.trim().isEmpty()) {
+            return 0L;
+        } else {
+            int wordCount = content.trim().split("\\s+").length;
+            int averageReadingSpeed = 200;
+
+            return (long) Math.ceil((double) wordCount / averageReadingSpeed);
+        }
     }
 
     @Override

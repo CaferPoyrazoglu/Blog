@@ -14,5 +14,7 @@ public interface PostService {
     PostDto getPostById(Long id, User user);
 
     List<PostDto> getPosts(User user);
+
+    Long calculateReadingTime(String text);
 }
 

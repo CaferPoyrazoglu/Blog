@@ -25,6 +25,10 @@ public class CreatePostRequestDto {
     @Size(min = 5, max = 50000, message = "Icerik {min} ila {max} karakter uzunlugunda olmali")
     private String content;
 
+    @NotBlank(message = "Aciklama gerekli")
+    @Size(min = 5, max = 400, message = "Aciklama {min} ila {max} karakter uzunlugunda olmali")
+    private String description;
+
     @NotNull(message = "Kategori ID gerekli")
     private Long categoryId;
 

@@ -36,6 +36,12 @@ public class Post {
     @Column(name = "CONTENT")
     private String content;
 
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @Column(name = "READING_TIME")
+    private Long readingTime;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
