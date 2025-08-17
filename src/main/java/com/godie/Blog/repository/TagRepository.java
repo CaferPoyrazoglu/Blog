@@ -15,6 +15,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     @Query(value = """
             SELECT
+                t.id AS id,
                 t.name AS name,
                 COUNT(pt.post_id) AS postCount
             FROM tags t

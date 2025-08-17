@@ -1,5 +1,6 @@
 package com.godie.Blog.service.impl;
 
+import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.dto.Tag.TagDto;
 import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
 import com.godie.Blog.model.Tag;
@@ -42,8 +43,10 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> getTags() {
-        return tagRepository.findAll();
+    public List<TagDto> getTags() {
+        return tagRepository.findAll().stream()
+                .map(tag -> modelMapper.map(tag, TagDto.class))
+                .toList();
     }
 
     @Override

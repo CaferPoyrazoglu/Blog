@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface TagService {
-    List<Tag> getTags();
+    List<TagDto> getTags();
 
     List<TagsWithPostCountDto> getTagsWithPostCount();
 

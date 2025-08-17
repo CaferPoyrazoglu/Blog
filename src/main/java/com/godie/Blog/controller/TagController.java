@@ -22,6 +22,11 @@ public class TagController {
 
 
     @GetMapping
+    public ResponseEntity<List<TagDto>> getTags() {
+        return ResponseEntity.ok(tagService.getTags());
+    }
+
+    @GetMapping("/with-post-count")
     public ResponseEntity<List<TagsWithPostCountDto>> getTagsWithPostCount() {
         return ResponseEntity.ok(tagService.getTagsWithPostCount());
     }
