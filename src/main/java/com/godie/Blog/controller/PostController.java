@@ -2,6 +2,7 @@ package com.godie.Blog.controller;
 
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
 import com.godie.Blog.dto.Post.PostDto;
+import com.godie.Blog.dto.Post.PostWithoutStoryDto;
 import com.godie.Blog.service.AuthenticationService;
 import com.godie.Blog.service.PostService;
 import jakarta.validation.Valid;
@@ -21,8 +22,8 @@ public class PostController {
 
 
     @GetMapping
-    public ResponseEntity<List<PostDto>> getPosts() {
-        return ResponseEntity.ok(postService.getPosts());
+    public ResponseEntity<List<PostWithoutStoryDto>> getPostsWithoutStory() {
+        return ResponseEntity.ok(postService.getPostsWithoutStory());
     }
 
     @PostMapping

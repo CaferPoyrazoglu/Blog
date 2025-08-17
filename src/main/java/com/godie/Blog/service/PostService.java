@@ -2,6 +2,7 @@ package com.godie.Blog.service;
 
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
 import com.godie.Blog.dto.Post.PostDto;
+import com.godie.Blog.dto.Post.PostWithoutStoryDto;
 import com.godie.Blog.model.User;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface PostService {
 
     PostDto getPostById(Long id);
 
-    List<PostDto> getPosts();
+    List<PostWithoutStoryDto> getPostsWithoutStory();
 
     Long calculateReadingTime(String text);
 }

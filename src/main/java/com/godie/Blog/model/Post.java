@@ -33,8 +33,9 @@ public class Post {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "CONTENT", columnDefinition = "TEXT")
-    private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STORY_ID", nullable = false)
+    private Story story;
 
     @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
     private String description;

@@ -2,19 +2,19 @@ package com.godie.Blog.service.impl;
 
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
 import com.godie.Blog.dto.Post.PostDto;
-import com.godie.Blog.model.Category;
-import com.godie.Blog.model.Post;
-import com.godie.Blog.model.Tag;
-import com.godie.Blog.model.User;
+import com.godie.Blog.dto.Post.PostWithoutStoryDto;
+import com.godie.Blog.model.*;
 import com.godie.Blog.repository.PostRepository;
 import com.godie.Blog.service.CategoryService;
 import com.godie.Blog.service.PostService;
+import com.godie.Blog.service.StoryService;
 import com.godie.Blog.service.TagService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,27 +24,16 @@ import java.util.Set;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final CategoryService categoryService;
+    private final StoryService storyService;
     private final TagService tagService;
     private final ModelMapper modelMapper;
 
     @Override
-    public PostDto createPost(CreatePostRequestDto createPostRequestDto, User user) {
-        Post newPost = new Post();
-        newPost.setTitle(createPostRequestDto.getTitle());
-        newPost.setContent(createPostRequestDto.getContent());
-        newPost.setDescription(createPostRequestDto.getDescription());
-        newPost.setReadingTime(calculateReadingTime(createPostRequestDto.getContent()));
-        newPost.setCreatedBy(user);
+    public PostDto createPost(CreatePostRequestDto dto, User user) {
+        Story story = buildAndSaveStory(dto);
+        Post post = buildPost(dto, user, story);
 
-        Category category = categoryService.getCategoryById(createPostRequestDto.getCategoryId());
-        newPost.setCategory(category);
-
-        Set<Long> tagIds = createPostRequestDto.getTagIds();
-        List<Tag> tags = tagService.getTagsByIds(tagIds);
-        newPost.setTags(new HashSet<>(tags));
-
-        Post savedPost = postRepository.save(newPost);
-
+        Post savedPost = postRepository.save(post);
         return modelMapper.map(savedPost, PostDto.class);
     }
 
@@ -74,10 +63,45 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getPosts() {
-        return postRepository.findAllWithCategoryAndTags().stream()
-                .map(post -> modelMapper.map(post, PostDto.class)) // ModelMapper ile dönüşüm
+    public List<PostWithoutStoryDto> getPostsWithoutStory() {
+        return postRepository.findAll().stream()
+                .map(post -> modelMapper.map(post, PostWithoutStoryDto.class))
                 .toList();
+    }
+
+    private Story buildAndSaveStory(CreatePostRequestDto dto) {
+        Story story = new Story();
+        story.setContent(dto.getContent());
+        return storyService.createStory(story);
+    }
+
+    private Post buildPost(CreatePostRequestDto dto, User user, Story story) {
+        Post post = new Post();
+        post.setTitle(dto.getTitle());
+        post.setDescription(dto.getDescription());
+        post.setReadingTime(calculateReadingTime(dto.getContent()));
+        post.setCreatedBy(user);
+        post.setStory(story);
+
+        post.setCategory(fetchCategory(dto.getCategoryId()));
+        post.setTags(fetchTags(dto.getTagIds()));
+
+        return post;
+    }
+
+    private Category fetchCategory(Long categoryId) {
+        Category category = categoryService.getCategoryById(categoryId);
+        if (category == null) {
+            throw new IllegalArgumentException("Kategori bulunamadı: " + categoryId);
+        }
+        return category;
+    }
+
+    private Set<Tag> fetchTags(Set<Long> tagIds) {
+        if (tagIds == null || tagIds.isEmpty()) {
+            return Collections.emptySet();
+        }
+        return new HashSet<>(tagService.getTagsByIds(tagIds));
     }
 
 }
