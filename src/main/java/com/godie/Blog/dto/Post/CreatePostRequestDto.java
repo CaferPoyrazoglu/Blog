@@ -18,15 +18,15 @@ import java.util.Set;
 public class CreatePostRequestDto {
 
     @NotBlank(message = "Baslik gerekli")
-    @Size(min = 3, max = 20, message = "Baslik {min} ila {max} karakter uzunlugunda olmali")
+    @Size(min = 1, max = 50, message = "Baslik {min} ila {max} karakter uzunlugunda olmali")
     private String title;
 
     @NotBlank(message = "Icerik gerekli")
-    @Size(min = 5, max = 50000, message = "Icerik {min} ila {max} karakter uzunlugunda olmali")
+    @Size(min = 1, max = 500000, message = "Icerik {min} ila {max} karakter uzunlugunda olmali")
     private String content;
 
     @NotBlank(message = "Aciklama gerekli")
-    @Size(min = 5, max = 400, message = "Aciklama {min} ila {max} karakter uzunlugunda olmali")
+    @Size(min = 1, max = 4000, message = "Aciklama {min} ila {max} karakter uzunlugunda olmali")
     private String description;
 
     @NotNull(message = "Kategori ID gerekli")

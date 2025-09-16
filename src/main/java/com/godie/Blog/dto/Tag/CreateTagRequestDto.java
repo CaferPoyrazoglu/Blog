@@ -16,8 +16,8 @@ import java.util.Set;
 public class CreateTagRequestDto {
 
     @NotEmpty(message = "En az bir etiket gerekli")
-    @Size(max = 10, message = "En fazla {max} etiket eklenebilir")
+    @Size(max = 15, message = "En fazla {max} etiket eklenebilir")
     private Set<
-            @Size(min = 2, max = 30, message = "Etiket {min} ila {max} karakter uzunlugunda olmali")
+            @Size(min = 1, max = 50, message = "Etiket {min} ila {max} karakter uzunlugunda olmali")
                     String> names;
 }
