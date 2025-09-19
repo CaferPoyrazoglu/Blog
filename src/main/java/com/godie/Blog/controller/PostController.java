@@ -8,6 +8,10 @@ import com.godie.Blog.service.AuthenticationService;
 import com.godie.Blog.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +27,20 @@ public class PostController {
 
 
     @GetMapping
-    public ResponseEntity<List<PostWithoutStoryDto>> getPostsWithoutStory() {
-        return ResponseEntity.ok(postService.getPostsWithoutStory());
+    public ResponseEntity<Page<PostWithoutStoryDto>> getPostsWithoutStory(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createdAt"));
+        return ResponseEntity.ok(postService.getPostsWithoutStory(pageable));
     }
 
     @GetMapping(path = "/tag/{tagId}")
-    public ResponseEntity<List<PostDto>> getPostsByTagId(@PathVariable Long tagId) {
-        return ResponseEntity.ok(postService.getPostsByTagsId(tagId));
+    public ResponseEntity<Page<PostDto>> getPostsByTagId(
+            @PathVariable Long tagId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createdAt"));
+        return ResponseEntity.ok(postService.getPostsByTagsId(tagId, pageable));
     }
 
     @PostMapping

@@ -2,6 +2,8 @@ package com.godie.Blog.repository;
 
 import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
 import com.godie.Blog.model.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,7 @@ import java.util.Set;
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
     List<Tag> findByNameIn(Set<String> names);
-
+    Page<Tag> findAll(Pageable pageable);
     @Query(value = """
             SELECT
                 t.id AS id,
@@ -23,5 +25,5 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
             GROUP BY t.id, t.name
             ORDER BY postCount DESC
             """, nativeQuery = true)
-    List<TagsWithPostCountDto> findTagsWithPostCount();
+    Page<TagsWithPostCountDto> findTagsWithPostCount(Pageable pageable);
 }

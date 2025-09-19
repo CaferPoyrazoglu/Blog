@@ -13,6 +13,8 @@ import com.godie.Blog.service.TagService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -91,17 +93,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostWithoutStoryDto> getPostsWithoutStory() {
-        return postRepository.findAll().stream()
-                .map(post -> modelMapper.map(post, PostWithoutStoryDto.class))
-                .toList();
+    public Page<PostDto> getPostsByTagsId(Long tagId, Pageable pageable) {
+        return postRepository.findByTagsId(tagId, pageable)
+                .map(post -> modelMapper.map(post, PostDto.class));
     }
 
     @Override
-    public List<PostDto> getPostsByTagsId(Long id) {
-        return postRepository.findByTagsId(id).stream()
-                .map(post -> modelMapper.map(post, PostDto.class))
-                .toList();
+    public Page<PostWithoutStoryDto> getPostsWithoutStory(Pageable pageable) {
+        return postRepository.findAll(pageable)
+                .map(post -> modelMapper.map(post, PostWithoutStoryDto.class));
     }
 
     private Story buildAndSaveStory(CreatePostRequestDto dto) {

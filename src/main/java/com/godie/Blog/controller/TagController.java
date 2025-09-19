@@ -7,6 +7,10 @@ import com.godie.Blog.service.AuthenticationService;
 import com.godie.Blog.service.TagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +26,19 @@ public class TagController {
 
 
     @GetMapping
-    public ResponseEntity<List<TagDto>> getTags() {
-        return ResponseEntity.ok(tagService.getTags());
+    public ResponseEntity<Page<TagDto>> getTags(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createdAt"));
+        return ResponseEntity.ok(tagService.getTags(pageable));
     }
 
     @GetMapping("/with-post-count")
-    public ResponseEntity<List<TagsWithPostCountDto>> getTagsWithPostCount() {
-        return ResponseEntity.ok(tagService.getTagsWithPostCount());
+    public ResponseEntity<Page<TagsWithPostCountDto>> getTagsWithPostCount(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createdAt"));
+        return ResponseEntity.ok(tagService.getTagsWithPostCount(pageable));
     }
 
     @PostMapping

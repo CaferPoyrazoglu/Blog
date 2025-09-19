@@ -5,6 +5,8 @@ import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.dto.Post.PostWithoutStoryDto;
 import com.godie.Blog.dto.Post.UpdatePostRequestDto;
 import com.godie.Blog.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ public interface PostService {
 
     PostDto getPostById(Long id);
 
-    List<PostWithoutStoryDto> getPostsWithoutStory();
+    Page<PostWithoutStoryDto> getPostsWithoutStory(Pageable pageable);
 
-    List<PostDto> getPostsByTagsId (Long id);
+    Page<PostDto> getPostsByTagsId(Long tagId, Pageable pageable);
 
     Long calculateReadingTime(String text);
 }

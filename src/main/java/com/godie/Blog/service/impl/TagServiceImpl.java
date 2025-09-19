@@ -10,6 +10,8 @@ import com.godie.Blog.service.TagService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +34,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagsWithPostCountDto> getTagsWithPostCount() {
-        return tagRepository.findTagsWithPostCount();
+    public Page<TagsWithPostCountDto> getTagsWithPostCount(Pageable pageable) {
+        return tagRepository.findTagsWithPostCount(pageable);
     }
 
     @Override
@@ -43,10 +45,9 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagDto> getTags() {
-        return tagRepository.findAll().stream()
-                .map(tag -> modelMapper.map(tag, TagDto.class))
-                .toList();
+    public Page<TagDto> getTags(Pageable pageable) {
+        return tagRepository.findAll(pageable)
+                .map(tag -> modelMapper.map(tag, TagDto.class));
     }
 
     @Override
