@@ -15,4 +15,12 @@ public class StoryServiceImpl implements StoryService {
     public Story createStory(Story story) {
         return storyRepository.save(story);
     }
+
+    @Override
+    public Story updateStory(Story story) {
+        Story existingStory = storyRepository.findById(story.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Story bulunamadı: " + story.getId()));
+        existingStory.setContent(story.getContent());
+        return storyRepository.save(existingStory);
+    }
 }

@@ -15,8 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreatePostRequestDto {
-
+public class UpdatePostRequestDto {
     @NotBlank(message = "Baslik gerekli")
     @Size(min = 1, max = 100, message = "Baslik {min} ila {max} karakter uzunlugunda olmali")
     private String title;

@@ -3,6 +3,7 @@ package com.godie.Blog.controller;
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
 import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.dto.Post.PostWithoutStoryDto;
+import com.godie.Blog.dto.Post.UpdatePostRequestDto;
 import com.godie.Blog.service.AuthenticationService;
 import com.godie.Blog.service.PostService;
 import jakarta.validation.Valid;
@@ -26,6 +27,11 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostsWithoutStory());
     }
 
+    @GetMapping(path = "/tag/{tagId}")
+    public ResponseEntity<List<PostDto>> getPostsByTagId(@PathVariable Long tagId) {
+        return ResponseEntity.ok(postService.getPostsByTagsId(tagId));
+    }
+
     @PostMapping
     public ResponseEntity<PostDto> createPost(
             @Valid @RequestBody CreatePostRequestDto createPostRequestDto) {
@@ -42,5 +48,13 @@ public class PostController {
     public ResponseEntity<Void> deletePostById(@PathVariable Long id) {
         postService.deletePostById(id, authenticationService.getAuthenticatedUser());
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{postId}")
+    public ResponseEntity<PostDto> updatePost(
+            @PathVariable Long postId,
+            @Valid @RequestBody UpdatePostRequestDto updatePostRequestDto) {
+        PostDto updatedPost = postService.updatePost(updatePostRequestDto, postId, authenticationService.getAuthenticatedUser());
+        return ResponseEntity.ok(updatedPost);
     }
 }

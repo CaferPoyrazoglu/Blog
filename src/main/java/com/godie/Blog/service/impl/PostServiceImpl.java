@@ -3,6 +3,7 @@ package com.godie.Blog.service.impl;
 import com.godie.Blog.dto.Post.CreatePostRequestDto;
 import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.dto.Post.PostWithoutStoryDto;
+import com.godie.Blog.dto.Post.UpdatePostRequestDto;
 import com.godie.Blog.model.*;
 import com.godie.Blog.repository.PostRepository;
 import com.godie.Blog.service.CategoryService;
@@ -38,6 +39,33 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public PostDto updatePost(UpdatePostRequestDto updatePostRequestDto, Long postId, User user) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Post bulunamadı ID:" + postId));
+
+
+        post.setTitle(updatePostRequestDto.getTitle());
+        post.setDescription(updatePostRequestDto.getDescription());
+
+        if (updatePostRequestDto.getContent() != null) {
+            post.getStory().setContent(updatePostRequestDto.getContent());
+            post.setReadingTime(calculateReadingTime(updatePostRequestDto.getContent()));
+            storyService.updateStory(post.getStory());
+        }
+
+        if (updatePostRequestDto.getCategoryId() != null) {
+            post.setCategory(fetchCategory(updatePostRequestDto.getCategoryId()));
+        }
+
+        if (updatePostRequestDto.getTagIds() != null) {
+            post.setTags(fetchTags(updatePostRequestDto.getTagIds()));
+        }
+
+        Post updatedPost = postRepository.save(post);
+        return modelMapper.map(updatedPost, PostDto.class);
+    }
+
+    @Override
     public Long calculateReadingTime(String content) {
         if (content == null || content.trim().isEmpty()) {
             return 0L;
@@ -66,6 +94,13 @@ public class PostServiceImpl implements PostService {
     public List<PostWithoutStoryDto> getPostsWithoutStory() {
         return postRepository.findAll().stream()
                 .map(post -> modelMapper.map(post, PostWithoutStoryDto.class))
+                .toList();
+    }
+
+    @Override
+    public List<PostDto> getPostsByTagsId(Long id) {
+        return postRepository.findByTagsId(id).stream()
+                .map(post -> modelMapper.map(post, PostDto.class))
                 .toList();
     }
 

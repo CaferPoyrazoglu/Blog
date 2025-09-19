@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CreateCategoryRequestDto {
     @NotBlank(message = "Kategori adi gerekli")
-    @Size(min = 1, max = 50, message = "Kategori adi {min} ila {max} karakter uzunlugunda olmali")
+    @Size(min = 1, max = 100, message = "Kategori adi {min} ila {max} karakter uzunlugunda olmali")
     private String name;
 
     @NotBlank(message = "Kategori aciklamasi gerekli")
