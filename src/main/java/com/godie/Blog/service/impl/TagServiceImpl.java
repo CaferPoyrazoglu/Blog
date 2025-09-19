@@ -1,6 +1,5 @@
 package com.godie.Blog.service.impl;
 
-import com.godie.Blog.dto.Post.PostDto;
 import com.godie.Blog.dto.Tag.TagDto;
 import com.godie.Blog.dto.Tag.TagsWithPostCountDto;
 import com.godie.Blog.model.Tag;

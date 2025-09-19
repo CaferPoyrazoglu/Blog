@@ -14,16 +14,19 @@ import java.util.Set;
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
     List<Tag> findByNameIn(Set<String> names);
+
     Page<Tag> findAll(Pageable pageable);
+
     @Query(value = """
             SELECT
                 t.id AS id,
                 t.name AS name,
+                t.created_at AS createdAt,
+                t.updated_at AS updatedAt,
                 COUNT(pt.post_id) AS postCount
             FROM tags t
             LEFT JOIN post_tags pt ON t.id = pt.tag_id
             GROUP BY t.id, t.name
-            ORDER BY postCount DESC
             """, nativeQuery = true)
     Page<TagsWithPostCountDto> findTagsWithPostCount(Pageable pageable);
 }
