@@ -2,10 +2,10 @@ applications:
   - name: blog
     memory: 1G
     instances: 1
+    stack: cflinuxfs4
     path: target/Blog-0.0.1-SNAPSHOT.jar
     buildpacks:
       - java_buildpack
-      - cflinuxfs4
     env:
       JBP_CONFIG_OPEN_JDK_JRE: "{ jre: { version: 17.+ }}"
       JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: "{enabled: false}"
